@@ -47,6 +47,9 @@
 							return false;
 						}
 					});
+					$this.on("keyup", function(){
+						pub.flattenInputToString.apply( $this );
+					});
 				}
 			});
 		},
@@ -69,6 +72,13 @@
 				}
 				$this.css({ height: height });
 			});
+		},
+		
+		flattenInputToString: function(){
+			var $this = $(this),
+				string = $this[0].value,
+				string = string.replace(/\s+/g, " ");
+			 	$this[0].value = string;
 		},
 		
 		destroy: function(){
