@@ -1,0 +1,12 @@
+{
+  "name": "jquery-autoexpand",
+  "version": "0.1.0",
+  "authors": [
+    "Tom-Marius Olsen <tom-marius.olsen@dagbladet.no>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "jquery": "1.10.2"
+  }
+}
