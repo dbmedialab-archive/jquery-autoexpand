@@ -47,8 +47,26 @@
 							return false;
 						}
 					});
-					$this.on("keyup", function(){
-						$this[0].value = $this[0].value.replace(/\s+/g, " ");
+					$this.on("keyup", function( e ){
+						var key = e.keyCode || e.which;
+						
+						if( key >= 37 && key <= 40 || key == 16 ){
+							return null;							
+						}
+						
+						var string = $this[0].value,
+							carotPos = pub.getCaretPos.apply( $this, [ $this[0] ] ),
+							first = string.substring( 0, carotPos ),
+							second = string.substring( carotPos );
+						first = first.replace(/\s+/g, " ");
+						second = second.replace(/\s+/g, " ");
+						if( first[ first.length - 1 ] && key == 32 ){
+							second = $.trim( second );															
+						}
+						
+						string = first + second; 
+						$this[0].value = string;
+						pub.setCaretPos.apply( $this, [  $this[0], first.length ] );
 					});
 				}
 			});
@@ -72,6 +90,39 @@
 				}
 				$this.css({ height: height });
 			});
+		},
+		
+		getCaretPos : function( input ){
+			if (!input) return; // No (input) element found
+	        if ('selectionStart' in input) {
+	            // Standard-compliant browsers
+	            return input.selectionStart;
+	        } else if (document.selection) {
+	            // IE
+	            input.focus();
+	            var sel = document.selection.createRange();
+	            var selLen = document.selection.createRange().text.length;
+	            sel.moveStart('character', -input.value.length);
+	            return sel.text.length - selLen;
+	        }
+		},
+		
+		setCaretPos : function( input, caretPos ){
+		    if(input != null) {
+		        if(input.createTextRange) {
+		            var range = input.createTextRange();
+		            range.move('character', caretPos);
+		            range.select();
+		        }
+		        else {
+		            if(input.selectionStart) {
+		            	input.focus();
+		            	input.setSelectionRange(caretPos, caretPos);
+		            }
+		            else
+		            	input.focus();
+		        }
+		    }
 		},
 		
 		destroy: function(){
