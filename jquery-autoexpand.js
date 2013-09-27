@@ -36,7 +36,7 @@
 
 				if($this.data('autoexpand').resizeOnInit) pub.resize.apply($this);
 				
-				$this.on('keyup focus', function(){
+				$this.on('keypress focus, keydown focus', function(){
 					pub.resize.apply($this);
 				});
 				
@@ -74,7 +74,7 @@
 		destroy: function(){
 			return this.each(function(){
 				var $this = $(this);
-				$this.unbind('keyup focus');
+				$this.unbind('keypress focus, keydown focus');
 				$this.css({ height: $this.data('autoexpand').originalHeight });
 				$this.removeData('autoexpand');
 			});
