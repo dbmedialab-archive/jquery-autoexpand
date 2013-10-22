@@ -52,6 +52,13 @@
 							$this.parents('form').submit();
 						}
 					});
+					
+					$this.on('paste', function(e){
+						setTimeout(function(){
+							$this.val( $this.val().replace(/(\r\n|\n|\r)/gm," ") );
+							pub.resize.apply($this);
+						}, 20);
+					});
 				}
 			});
 		},
