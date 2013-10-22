@@ -43,8 +43,13 @@
 				if( $this.data('autoexpand').actAsInput ){
 					$this.on('keypress', function(e){
 						if((e.keyCode || e.which) == 13) {
-							$this.parents('form').submit();
 							return false;
+						}
+					});
+					
+					$this.on('keyup', function(e){
+						if((e.keyCode || e.which) == 13) {
+							$this.parents('form').submit();
 						}
 					});
 				}
